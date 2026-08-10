@@ -1,5 +1,3 @@
-import { ComingSoonBadge } from "./ComingSoonBadge";
-
 export function LauncherCta() {
   return (
     <section id="launcher" className="border-b border-outline-variant">
@@ -9,12 +7,20 @@ export function LauncherCta() {
             <h2 className="font-heading text-2xl font-semibold sm:text-3xl">
               Prompts sin salir del editor
             </h2>
-            <ComingSoonBadge />
+            <a
+              href="https://github.com/adminoryslabs/armory-launcher-desktop/releases/latest"
+              target="_blank"
+              rel="noreferrer"
+              className="border border-primary bg-primary-container px-4 py-2 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-on-primary"
+            >
+              Descargar para Windows
+            </a>
           </div>
           <p className="mt-3 max-w-xl text-sm text-on-surface-variant">
-            <span className="text-on-surface">launcher-desktop</span> va a ser una app nativa
-            con hotkey global: permite buscar un prompt y pegarlo donde se esté escribiendo,
-            sin cambiar de ventana ni volver al navegador.
+            <span className="text-on-surface">Armory Launcher</span> es una app nativa con hotkey
+            global (<code className="font-mono text-xs">Ctrl+Shift+Space</code>): busca un skill o
+            un prompt y lo copia donde se esté escribiendo, sin cambiar de ventana ni volver al
+            navegador.
           </p>
         </div>
       </div>
