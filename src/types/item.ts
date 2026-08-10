@@ -1,0 +1,21 @@
+export type ItemType = "skill" | "prompt";
+
+export interface ItemSummary {
+  id: number;
+  name: string;
+  description: string;
+  type: ItemType;
+  tags: string[];
+  path: string;
+  updated_at: string;
+}
+
+export interface ItemDetail extends ItemSummary {
+  body: string;
+  install_command?: string;
+}
+
+export interface ItemsResponse {
+  count: number;
+  items: ItemSummary[];
+}
