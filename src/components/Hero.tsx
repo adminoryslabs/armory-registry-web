@@ -1,6 +1,6 @@
 import { CopyButton } from "./CopyButton";
 
-const GENERIC_INSTALL_COMMAND = "npx skills add adminoryslabs/Skills --skill <nombre>";
+const GENERIC_INSTALL_COMMAND = "npx skills add adminoryslabs/Armory --skill <nombre>";
 
 export function Hero() {
   return (

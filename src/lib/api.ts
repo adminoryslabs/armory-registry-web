@@ -51,12 +51,12 @@ export async function fetchItemDetail(name: string): Promise<ItemDetail> {
 /**
  * Construye el comando de instalación sin pedir el detalle del item.
  * El backend expone `install_command` en `GET /items/:name`, pero el patrón
- * es determinístico (`npx skills add adminoryslabs/Skills --skill <name>`),
+ * es determinístico (`npx skills add adminoryslabs/Armory --skill <name>`),
  * así que las cards de la grilla lo arman localmente y evitan una llamada de
  * red extra solo para copiar un comando. Ver CLAUDE.md, sección Decisiones.
  */
 export function buildInstallCommand(name: string): string {
-  return `npx skills add adminoryslabs/Skills --skill ${name}`;
+  return `npx skills add adminoryslabs/Armory --skill ${name}`;
 }
 
 export { API_URL };

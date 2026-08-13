@@ -5,7 +5,7 @@ export function Footer() {
         <p className="text-xs text-on-surface-variant">
           Armory indexa el contenido de{" "}
           <a
-            href="https://github.com/adminoryslabs/Skills"
+            href="https://github.com/adminoryslabs/Armory"
             target="_blank"
             rel="noreferrer"
             className="text-primary hover:text-primary-dim underline underline-offset-2"
