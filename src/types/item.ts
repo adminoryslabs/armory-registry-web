@@ -1,4 +1,4 @@
-export type ItemType = "skill" | "prompt";
+export type ItemType = "skill" | "prompt" | "mcp";
 
 export interface ItemSummary {
   id: number;
@@ -8,6 +8,8 @@ export interface ItemSummary {
   tags: string[];
   path: string;
   updated_at: string;
+  repo_url?: string;
+  docs_url?: string;
 }
 
 export interface ItemDetail extends ItemSummary {

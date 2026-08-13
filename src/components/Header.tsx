@@ -14,14 +14,14 @@ export function Header({ query, onQueryChange }: HeaderProps) {
         </a>
         <div className="w-full sm:max-w-md">
           <label className="sr-only" htmlFor="global-search">
-            Buscar skills y prompts
+            Buscar skills, prompts y MCPs
           </label>
           <input
             id="global-search"
             type="search"
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
-            placeholder="Buscar skills, prompts..."
+            placeholder="Buscar skills, prompts, MCPs..."
             className="w-full border border-outline-variant bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:outline-none"
           />
         </div>

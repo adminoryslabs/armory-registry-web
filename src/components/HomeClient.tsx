@@ -14,9 +14,10 @@ import type { ItemSummary } from "@/types/item";
 interface HomeClientProps {
   initialSkills: ItemSummary[] | null;
   initialPrompts: ItemSummary[] | null;
+  initialMcps: ItemSummary[] | null;
 }
 
-export function HomeClient({ initialSkills, initialPrompts }: HomeClientProps) {
+export function HomeClient({ initialSkills, initialPrompts, initialMcps }: HomeClientProps) {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebouncedValue(query, 300);
   const [selectedItem, setSelectedItem] = useState<ItemSummary | null>(null);
@@ -42,6 +43,15 @@ export function HomeClient({ initialSkills, initialPrompts }: HomeClientProps) {
           description="Instrucciones cortas listas para pegar tal cual, sin instalación."
           query={debouncedQuery}
           initialItems={initialPrompts}
+          onItemOpen={setSelectedItem}
+        />
+        <CatalogSection
+          id="mcps"
+          type="mcp"
+          title="MCPs"
+          description="Servidores MCP listos para conectar a tu agente. Copiá el prompt de instalación y sumalos en segundos."
+          query={debouncedQuery}
+          initialItems={initialMcps}
           onItemOpen={setSelectedItem}
         />
         <HarnessesSection />

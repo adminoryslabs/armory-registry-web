@@ -1,6 +1,6 @@
 import { HomeClient } from "@/components/HomeClient";
 import { fetchItems } from "@/lib/api";
-import type { ItemSummary } from "@/types/item";
+import type { ItemSummary, ItemType } from "@/types/item";
 
 // El catálogo cambia en vivo (se agregan skills/prompts nuevos), así que el
 // listado inicial se resuelve en cada request en vez de quedar prerenderizado
@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 // request al servidor (SSR) para que la primera carga muestre datos reales
 // de registry-api sin depender de que el JS del cliente ya haya corrido.
 // La búsqueda en vivo posterior sigue siendo client-side (ver HomeClient).
-async function loadInitial(type: "skill" | "prompt"): Promise<ItemSummary[] | null> {
+async function loadInitial(type: ItemType): Promise<ItemSummary[] | null> {
   try {
     const response = await fetchItems({ type });
     return response.items;
@@ -23,10 +23,17 @@ async function loadInitial(type: "skill" | "prompt"): Promise<ItemSummary[] | nu
 }
 
 export default async function Home() {
-  const [initialSkills, initialPrompts] = await Promise.all([
+  const [initialSkills, initialPrompts, initialMcps] = await Promise.all([
     loadInitial("skill"),
     loadInitial("prompt"),
+    loadInitial("mcp"),
   ]);
 
-  return <HomeClient initialSkills={initialSkills} initialPrompts={initialPrompts} />;
+  return (
+    <HomeClient
+      initialSkills={initialSkills}
+      initialPrompts={initialPrompts}
+      initialMcps={initialMcps}
+    />
+  );
 }

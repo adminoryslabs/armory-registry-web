@@ -127,6 +127,20 @@ function EmptyState({ type, hasQuery }: { type: ItemType; hasQuery: boolean }) {
     );
   }
 
+  if (type === "mcp" && !hasQuery) {
+    return (
+      <div className="border border-outline-variant bg-surface-container-low px-6 py-10 text-center">
+        <p className="font-heading text-lg text-on-surface">
+          Todavía no hay MCPs publicados
+        </p>
+        <p className="mt-2 text-sm text-on-surface-variant">
+          Las secciones de Skills y Prompts ya tienen contenido real para explorar mientras se
+          suman los primeros MCPs.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="border border-outline-variant bg-surface-container-low px-6 py-10 text-center text-sm text-on-surface-variant">
       Sin resultados para tu búsqueda.

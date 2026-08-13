@@ -1,9 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { ItemDetail, ItemSummary } from "@/types/item";
+import type { ItemDetail, ItemSummary, ItemType } from "@/types/item";
 import { ApiError, buildInstallCommand, fetchItemDetail } from "@/lib/api";
 import { CopyButton } from "./CopyButton";
+
+const TYPE_LABELS: Record<ItemType, string> = {
+  skill: "Skill",
+  prompt: "Prompt",
+  mcp: "MCP",
+};
+
+const COPY_LABELS: Record<ItemType, string> = {
+  skill: "Copiar comando de instalación",
+  prompt: "Copiar prompt",
+  mcp: "Copiar prompt de instalación",
+};
 
 interface ItemModalProps {
   item: ItemSummary;
@@ -64,7 +76,7 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
         <div className="flex items-start justify-between gap-4">
           <div>
             <span className="font-mono text-[11px] uppercase tracking-wide text-primary">
-              {item.type === "skill" ? "Skill" : "Prompt"}
+              {TYPE_LABELS[item.type]}
             </span>
             <h3 className="mt-1 font-heading text-2xl font-semibold text-on-surface">
               {item.name}
@@ -95,6 +107,31 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
           </ul>
         )}
 
+        {item.type === "mcp" && (item.repo_url || item.docs_url) && (
+          <div className="mt-3 flex flex-wrap gap-3">
+            {item.repo_url && (
+              <a
+                href={item.repo_url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs text-primary hover:underline"
+              >
+                Repositorio →
+              </a>
+            )}
+            {item.docs_url && (
+              <a
+                href={item.docs_url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs text-primary hover:underline"
+              >
+                Documentación →
+              </a>
+            )}
+          </div>
+        )}
+
         <div className="mt-5">
           {state.status === "loading" && (
             <div className="h-32 animate-pulse border border-outline-variant bg-surface-container-low" />
@@ -114,12 +151,12 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
                     getText={() =>
                       state.detail.install_command ?? buildInstallCommand(item.name)
                     }
-                    label="Copiar comando de instalación"
+                    label={COPY_LABELS[item.type]}
                   />
                 ) : (
                   <CopyButton
                     getText={() => state.detail.body}
-                    label="Copiar prompt"
+                    label={COPY_LABELS[item.type]}
                   />
                 )}
               </div>

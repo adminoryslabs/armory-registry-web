@@ -1,6 +1,12 @@
-import type { ItemSummary } from "@/types/item";
+import type { ItemSummary, ItemType } from "@/types/item";
 import { buildInstallCommand, fetchItemDetail } from "@/lib/api";
 import { CopyButton } from "./CopyButton";
+
+const COPY_LABELS: Record<ItemType, string> = {
+  skill: "Copiar comando de instalación",
+  prompt: "Copiar prompt",
+  mcp: "Copiar prompt de instalación",
+};
 
 interface ItemCardProps {
   item: ItemSummary;
@@ -36,11 +42,36 @@ export function ItemCard({ item, onOpen }: ItemCardProps) {
         </ul>
       )}
 
+      {item.type === "mcp" && (item.repo_url || item.docs_url) && (
+        <div className="mt-3 flex flex-wrap gap-3">
+          {item.repo_url && (
+            <a
+              href={item.repo_url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-primary hover:underline"
+            >
+              Repositorio →
+            </a>
+          )}
+          {item.docs_url && (
+            <a
+              href={item.docs_url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-primary hover:underline"
+            >
+              Documentación →
+            </a>
+          )}
+        </div>
+      )}
+
       <div className="mt-4">
         {item.type === "skill" ? (
           <CopyButton
             getText={() => buildInstallCommand(item.name)}
-            label="Copiar comando de instalación"
+            label={COPY_LABELS[item.type]}
             className="w-full"
           />
         ) : (
@@ -49,7 +80,7 @@ export function ItemCard({ item, onOpen }: ItemCardProps) {
               const detail = await fetchItemDetail(item.name);
               return detail.body;
             }}
-            label="Copiar prompt"
+            label={COPY_LABELS[item.type]}
             className="w-full"
           />
         )}
