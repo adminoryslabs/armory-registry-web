@@ -9,7 +9,7 @@ el repositorio de contenido directamente. No reemplaza el instalador
 `npx skills add adminoryslabs/Skills --skill <nombre>` — lo complementa permitiendo buscar,
 filtrar y usar el catálogo desde el navegador.
 
-Ver `D:\DMC_Courses\multirepo-demo\CLAUDE.md` para el contexto completo del ecosistema.
+Ver `D:\DMC_Courses\Armory\CLAUDE.md` para el contexto completo del ecosistema.
 
 ## Qué hace
 
