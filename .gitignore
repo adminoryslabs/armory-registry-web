@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# gentle-ai
+.atl/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

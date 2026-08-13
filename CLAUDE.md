@@ -1,10 +1,10 @@
 # registry-web
 
-Frontend del ecosistema `multirepo-demo`. Sitio público de descubrimiento del catálogo de
+Frontend del ecosistema Armory. Sitio público de descubrimiento del catálogo de
 `adminoryslabs-skills` (nombre público: **Armory**). Ver
-`D:\DMC_Courses\multirepo-demo\CLAUDE.md` para el contexto completo del ecosistema (los otros
-repos, el contrato de contenido, el plan de despliegue) y `../registry-api/CLAUDE.md` para el
-backend que este repo consume.
+`D:\DMC_Courses\Armory\CLAUDE.md` para el contexto completo del ecosistema (los otros repos, el
+contrato de contenido, el plan de despliegue) y `../registry-api/CLAUDE.md` para el backend que
+este repo consume.
 
 ## Qué hay
 
@@ -25,6 +25,23 @@ backend que este repo consume.
 - **Dark mode únicamente**: no hay toggle claro/oscuro. `globals.css` define los tokens de color
   del AiHub como colores custom de Tailwind vía `@theme` (Tailwind v4, sin `tailwind.config.js`
   — la configuración vive en CSS).
+
+## Cómo correrlo en local
+
+```bash
+npm install
+cp .env.example .env.local   # revisar que NEXT_PUBLIC_API_URL apunte a registry-api
+cd ../registry-api && npm run dev   # en otra terminal, puerto 3000 por defecto
+npm run dev                          # de vuelta en registry-web
+```
+
+El servidor de dev corre en `3001` si el `3000` ya está tomado por `registry-api` (Next.js elige
+el siguiente puerto libre), o en `3000` si `registry-api` corre en otro puerto. Sin
+`registry-api` levantado, `page.tsx` cae a `initialSkills/initialPrompts: null` y `HomeClient`
+hace su propio fetch client-side, mostrando el estado de error de `ApiError` en vez de romper el
+build/SSR.
+
+Otros scripts: `npm run build`, `npm start` (sirve el build), `npm run lint`.
 
 ## Decisiones tomadas
 
@@ -48,27 +65,31 @@ backend que este repo consume.
   incluya datos reales (necesario tanto para verificar con `curl` como para evitar el flash de
   "cargando" en la primera carga). Cualquier búsqueda posterior es 100% client-side; `page.tsx`
   no vuelve a ejecutarse mientras el usuario escribe.
-- **Estado vacío de Prompts distinto del de "sin resultados"**: `type=prompt` hoy devuelve
-  siempre `count: 0` porque todavía no hay prompts publicados en `adminoryslabs-skills`. Se trata
-  como un estado propio ("Todavía no hay prompts publicados") en vez de mostrar el mensaje
-  genérico de "sin resultados para tu búsqueda", que está reservado para cuando una búsqueda con
-  texto no encuentra coincidencias en Skills.
+- **Estado vacío de Prompts distinto del de "sin resultados"**: si `type=prompt` devuelve
+  `count: 0` sin búsqueda activa, se trata como un estado propio ("Todavía no hay prompts
+  publicados") en vez de mostrar el mensaje genérico de "sin resultados para tu búsqueda", que
+  está reservado para cuando una búsqueda con texto no encuentra coincidencias.
 - **Sección Harnesses no consume la API**: el modelo de datos de `registry-api` no tiene un
-  `type: harness` — es contenido estático en `HarnessesSection.tsx`, con la card de `gentle-ai`
-  marcada "Próximamente" y el crédito a Gentleman-Programming explícito (no es una creación de
-  OrysLabs, ver CLAUDE.md del ecosistema).
-- **CTA del launcher también estático**: `launcher-desktop` todavía no existe como repo, así que
-  `LauncherCta.tsx` no enlaza a nada — mismo tratamiento visual "Próximamente" que Harnesses.
+  `type: harness` — es contenido estático en `HarnessesSection.tsx`. La card de `gentle-ai` ya
+  enlaza al repo real (`github.com/Gentleman-Programming/gentle-ai`) con el crédito explícito a
+  Gentleman-Programming (no es una creación de OrysLabs); el `ComingSoonBadge` quedó reservado
+  para la promesa de "más harnesses propios de OrysLabs", no para gentle-ai.
+- **CTA del launcher ya no es estático**: `LauncherCta.tsx` enlaza a
+  `github.com/adminoryslabs/armory-launcher-desktop/releases/latest` (commit `1675a6f`). Antes de
+  ese commit era un placeholder "Próximamente" porque el repo del launcher no existía todavía —
+  si se toca este componente, no reintroducir el estado "coming soon".
 - **Border-radius**: el sistema define máximo 2-3px en toda la UI. Se usan las utilidades por
   defecto de Tailwind (`rounded-sm`, sin `rounded-md/lg/xl/full`) en vez de definir un token de
   radio custom global, porque no todos los elementos necesitan el mismo radio y forzarlo con
   `!important` global hubiera roto elementos legítimamente circulares (ninguno existe hoy, pero
   no había necesidad de cerrar esa puerta).
 
-## Cómo correrlo
+## Relación con el ecosistema
 
-Ver `README.md` para el paso a paso completo. Resumen: `registry-api` tiene que estar corriendo
-(`cd ../registry-api && npm run dev`, puerto 3000) antes de levantar `npm run dev` acá.
+`registry-web` es cliente de solo lectura de `registry-api` (nunca toca Postgres ni el repo de
+contenido directamente) y no tiene dependientes propios — es una hoja del grafo. `launcher-desktop`
+no depende de este repo, pero comparte el mismo backend y `registry-web` enlaza a sus releases
+desde `LauncherCta`. Detalle completo del ecosistema en `D:\DMC_Courses\Armory\CLAUDE.md`.
 
 ## Estructura
 
@@ -89,8 +110,8 @@ registry-web/
 │   │   ├── ItemCard.tsx        # card individual de la grilla
 │   │   ├── ItemModal.tsx       # detalle completo de un item
 │   │   ├── CopyButton.tsx      # botón de copiar reusable (texto sync o async)
-│   │   ├── HarnessesSection.tsx  # sección estática, coming soon
-│   │   ├── LauncherCta.tsx       # sección estática, coming soon
+│   │   ├── HarnessesSection.tsx  # sección estática, gentle-ai enlaza a su repo real
+│   │   ├── LauncherCta.tsx       # enlaza a la última release de armory-launcher-desktop
 │   │   ├── ComingSoonBadge.tsx
 │   │   └── Footer.tsx
 │   ├── lib/
