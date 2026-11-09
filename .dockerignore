@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.github
+.engram
+.atl
+openspec
+deploy
+.env*
+!.env.example
+*.md
+tsconfig.tsbuildinfo
+next-env.d.ts
