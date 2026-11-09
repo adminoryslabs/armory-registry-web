@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import themeInit from "@adminoryslabs/design-system/theme-init";
 import "@adminoryslabs/design-system/fonts";
 import "./globals.css";
 
@@ -10,7 +11,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" data-line="academy" className="h-full antialiased">
+    <html
+      lang="es"
+      data-line="academy"
+      data-theme-default="system"
+      className="h-full antialiased"
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
       <body className="min-h-full flex flex-col bg-orys-bg text-orys-fg">
         {children}
       </body>

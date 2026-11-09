@@ -2,10 +2,6 @@
 @import "@adminoryslabs/design-system/css";
 @import "@adminoryslabs/design-system/tailwind-theme";
 
-html {
-  color-scheme: dark;
-}
-
 body {
   background: var(--orys-bg);
   color: var(--orys-fg);
