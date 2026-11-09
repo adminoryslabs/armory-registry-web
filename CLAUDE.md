@@ -22,13 +22,20 @@ este repo consume.
   `buildInstallCommand`. Lee la URL base desde `NEXT_PUBLIC_API_URL` (default
   `http://localhost:3000`). Envuelve errores de red/HTTP en `ApiError` con mensaje en español
   listo para mostrar en UI.
-- **Dark mode únicamente**: no hay toggle claro/oscuro. `globals.css` define los tokens de color
-  del AiHub como colores custom de Tailwind vía `@theme` (Tailwind v4, sin `tailwind.config.js`
-  — la configuración vive en CSS).
+- **Dark mode únicamente**: no hay toggle claro/oscuro. `src/app/globals.css` importa
+  `@adminoryslabs/design-system/css` y `@adminoryslabs/design-system/tailwind-theme`; el layout
+  raíz declara `<html data-line="academy">`. Los estilos usan tokens `--orys-*` y clases `orys-*`
+  de Tailwind 4. Regla: cero colores escritos a mano (ni hex ni rgba).
+- **Tipografía**: Inter (`--orys-font-sans`) e JetBrains Mono (`--orys-font-mono`) vía
+  `next/font`. En `globals.css` los tokens de fuente se apuntan a las variables de `next/font`.
+- **Instalación privada**: `@adminoryslabs/design-system` se resuelve desde GitHub Packages.
+  `npm install` y el build requieren `NODE_AUTH_TOKEN` con `read:packages`; en Vercel debe estar
+  configurado en Production y Preview.
 
 ## Cómo correrlo en local
 
 ```bash
+export NODE_AUTH_TOKEN="tu_token"   # PowerShell: $env:NODE_AUTH_TOKEN = "tu_token"
 npm install
 cp .env.example .env.local   # revisar que NEXT_PUBLIC_API_URL apunte a registry-api
 cd ../registry-api && npm run dev   # en otra terminal, puerto 3000 por defecto
@@ -78,11 +85,8 @@ Otros scripts: `npm run build`, `npm start` (sirve el build), `npm run lint`.
   `github.com/adminoryslabs/armory-launcher-desktop/releases/latest` (commit `1675a6f`). Antes de
   ese commit era un placeholder "Próximamente" porque el repo del launcher no existía todavía —
   si se toca este componente, no reintroducir el estado "coming soon".
-- **Border-radius**: el sistema define máximo 2-3px en toda la UI. Se usan las utilidades por
-  defecto de Tailwind (`rounded-sm`, sin `rounded-md/lg/xl/full`) en vez de definir un token de
-  radio custom global, porque no todos los elementos necesitan el mismo radio y forzarlo con
-  `!important` global hubiera roto elementos legítimamente circulares (ninguno existe hoy, pero
-  no había necesidad de cerrar esa puerta).
+- **Radios y sombras**: se usan los tokens del design system (`rounded-orys-*`,
+  `shadow-orys-panel`). No se definen radios ni sombras locales.
 
 ## Relación con el ecosistema
 
@@ -101,7 +105,7 @@ registry-web/
 │   ├── app/
 │   │   ├── layout.tsx      # fuentes (next/font), metadata, wrapper HTML
 │   │   ├── page.tsx        # Server Component: SSR del listado inicial
-│   │   └── globals.css     # tokens de color/tipografía del AiHub vía @theme
+│   │   └── globals.css     # imports del design system y fuentes
 │   ├── components/
 │   │   ├── HomeClient.tsx      # orquesta estado de búsqueda y modal
 │   │   ├── Header.tsx          # buscador global

@@ -23,22 +23,27 @@ Ver `D:\DMC_Courses\Armory\CLAUDE.md` para el contexto completo del ecosistema.
 ## Requisitos
 
 - Node.js 18+
+- Un token de GitHub con permiso `read:packages` en la variable `NODE_AUTH_TOKEN`. El paquete
+  `@adminoryslabs/design-system` es privado y se instala desde GitHub Packages.
 - [`registry-api`](../registry-api) corriendo y accesible (local o desplegado).
 
 ## Cómo levantarlo local
 
 ```bash
-# 1. Instalar dependencias
+# 1. Configurar el token de GitHub Packages (read:packages)
+export NODE_AUTH_TOKEN="tu_token"        # PowerShell: $env:NODE_AUTH_TOKEN = "tu_token"
+
+# 2. Instalar dependencias
 npm install
 
-# 2. Configurar variables de entorno
+# 3. Configurar variables de entorno
 cp .env.example .env.local
 # Revisar que NEXT_PUBLIC_API_URL apunte a registry-api
 
-# 3. Levantar registry-api en otra terminal (puerto 3000 por defecto)
+# 4. Levantar registry-api en otra terminal (puerto 3000 por defecto)
 cd ../registry-api && npm run dev
 
-# 4. Levantar el servidor de desarrollo
+# 5. Levantar el servidor de desarrollo
 npm run dev
 ```
 
@@ -51,10 +56,11 @@ El servidor corre por defecto en `http://localhost:3001` si el puerto `3000` ya 
 | Variable | Descripción | Ejemplo |
 |---|---|---|
 | `NEXT_PUBLIC_API_URL` | URL base de `registry-api`. Pública (se usa también desde el navegador), por eso lleva el prefijo `NEXT_PUBLIC_`. | `http://localhost:3000` |
+| `NODE_AUTH_TOKEN` | Token de GitHub con `read:packages`, necesario para instalar `@adminoryslabs/design-system` desde GitHub Packages. Solo se usa en `npm install` y en el build. | `ghp_...` (no commitear) |
 
-Ver `.env.example` para el valor por defecto de desarrollo local. La URL de producción (Render)
-todavía no existe: cuando `registry-api` se despliegue, reemplazar el valor en la configuración
-de variables de entorno de Vercel.
+Ver `.env.example` para el valor por defecto de desarrollo local. En producción,
+`NEXT_PUBLIC_API_URL` debe apuntar a la URL pública de `registry-api` (por ejemplo,
+`https://api-armory.oryslabs.com`).
 
 ## Scripts
 
@@ -67,13 +73,15 @@ de variables de entorno de Vercel.
 
 ## Despliegue en Vercel
 
-El proyecto no requiere configuración adicional: es un proyecto Next.js estándar (App Router,
-sin servidor custom).
+Es un proyecto Next.js estándar (App Router, sin servidor custom). Solo requiere las variables
+de entorno indicadas abajo.
 
 1. Importar el repositorio en Vercel.
-2. Configurar la variable de entorno `NEXT_PUBLIC_API_URL` en el panel del proyecto (Settings →
-   Environment Variables), apuntando a la URL pública de `registry-api` en Render.
-3. Vercel detecta Next.js automáticamente y usa `npm run build` como comando de build; no hace
+2. Configurar `NEXT_PUBLIC_API_URL` en el panel del proyecto (Settings → Environment Variables),
+   apuntando a la URL pública de `registry-api`.
+3. Configurar `NODE_AUTH_TOKEN` (token de GitHub con `read:packages`) en Production y Preview.
+   Sin esta variable, el build falla al instalar `@adminoryslabs/design-system`.
+4. Vercel detecta Next.js automáticamente y usa `npm run build` como comando de build; no hace
    falta tocar el `Build Command` ni el `Output Directory`.
 
 La página principal (`/`) se renderiza dinámicamente en cada request (no queda prerenderizada en
@@ -83,7 +91,9 @@ nuevos en `adminoryslabs-skills`.
 ## Stack
 
 - Next.js (App Router) + TypeScript
-- Tailwind CSS v4 (tokens de diseño configurados como colores custom en `src/app/globals.css`,
-  vía `@theme`)
-- Google Fonts vía `next/font`: Space Grotesk (headings), Inter (cuerpo), JetBrains Mono
-  (comandos y código)
+- Tailwind CSS v4 + `@adminoryslabs/design-system` (línea **academy**): tokens `--orys-*` y
+  clases `orys-*`. El tema se importa en `src/app/globals.css` y la línea se declara con
+  `<html data-line="academy">`.
+- Inter (texto) y JetBrains Mono (comandos y código) vía `next/font`.
+- Regla de color: no se escriben colores a mano (ni hex ni rgba). Solo se usan tokens
+  `--orys-*` o clases `orys-*` del design system.
