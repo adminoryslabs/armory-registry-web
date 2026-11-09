@@ -64,20 +64,21 @@ export function CatalogSection({
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, query]);
 
   return (
-    <section id={id} className="border-b border-outline-variant">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <h2 className="font-heading text-2xl font-semibold sm:text-3xl">{title}</h2>
-        <p className="mt-2 max-w-xl text-sm text-on-surface-variant">{description}</p>
+    <section id={id} className="border-b border-orys-line">
+      <div className="mx-auto max-w-6xl px-orys-4 py-orys-14 sm:px-orys-6">
+        <h2 className="font-orys-sans text-orys-xl font-orys-semibold tracking-orys-head sm:text-orys-h3">
+          {title}
+        </h2>
+        <p className="mt-orys-2 max-w-xl text-orys-sm text-orys-fg-dim">{description}</p>
 
-        <div className="mt-8">
+        <div className="mt-orys-8">
           {state.status === "loading" && <LoadingGrid />}
 
           {state.status === "error" && (
-            <div className="border border-error/50 bg-error/10 px-4 py-6 text-sm text-error">
+            <div className="rounded-orys-md border border-orys-fail/50 bg-orys-fail-soft px-orys-4 py-orys-6 text-orys-sm text-orys-fail">
               {state.message}
             </div>
           )}
@@ -87,7 +88,7 @@ export function CatalogSection({
           )}
 
           {state.status === "ready" && state.items.length > 0 && (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-orys-4 sm:grid-cols-2 lg:grid-cols-3">
               {state.items.map((item) => (
                 <ItemCard key={item.id} item={item} onOpen={onItemOpen} />
               ))}
@@ -101,11 +102,11 @@ export function CatalogSection({
 
 function LoadingGrid() {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-orys-4 sm:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: 3 }).map((_, index) => (
         <div
           key={index}
-          className="h-40 animate-pulse border border-outline-variant bg-surface-container-low"
+          className="h-40 animate-pulse rounded-orys-lg border border-orys-line bg-orys-bg-raised"
         />
       ))}
     </div>
@@ -115,11 +116,11 @@ function LoadingGrid() {
 function EmptyState({ type, hasQuery }: { type: ItemType; hasQuery: boolean }) {
   if (type === "prompt" && !hasQuery) {
     return (
-      <div className="border border-outline-variant bg-surface-container-low px-6 py-10 text-center">
-        <p className="font-heading text-lg text-on-surface">
+      <div className="rounded-orys-lg border border-orys-line bg-orys-bg-raised px-orys-6 py-orys-10 text-center">
+        <p className="font-orys-sans text-orys-lg text-orys-fg">
           Todavía no hay prompts publicados
         </p>
-        <p className="mt-2 text-sm text-on-surface-variant">
+        <p className="mt-orys-2 text-orys-sm text-orys-fg-dim">
           La sección de Skills ya tiene contenido real para explorar mientras se suman los
           primeros prompts.
         </p>
@@ -129,11 +130,11 @@ function EmptyState({ type, hasQuery }: { type: ItemType; hasQuery: boolean }) {
 
   if (type === "mcp" && !hasQuery) {
     return (
-      <div className="border border-outline-variant bg-surface-container-low px-6 py-10 text-center">
-        <p className="font-heading text-lg text-on-surface">
+      <div className="rounded-orys-lg border border-orys-line bg-orys-bg-raised px-orys-6 py-orys-10 text-center">
+        <p className="font-orys-sans text-orys-lg text-orys-fg">
           Todavía no hay MCPs publicados
         </p>
-        <p className="mt-2 text-sm text-on-surface-variant">
+        <p className="mt-orys-2 text-orys-sm text-orys-fg-dim">
           Las secciones de Skills y Prompts ya tienen contenido real para explorar mientras se
           suman los primeros MCPs.
         </p>
@@ -142,7 +143,7 @@ function EmptyState({ type, hasQuery }: { type: ItemType; hasQuery: boolean }) {
   }
 
   return (
-    <div className="border border-outline-variant bg-surface-container-low px-6 py-10 text-center text-sm text-on-surface-variant">
+    <div className="rounded-orys-lg border border-orys-line bg-orys-bg-raised px-orys-6 py-orys-10 text-center text-orys-sm text-orys-fg-dim">
       Sin resultados para tu búsqueda.
     </div>
   );

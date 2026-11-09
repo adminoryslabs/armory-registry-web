@@ -7,9 +7,12 @@ interface HeaderProps {
 
 export function Header({ query, onQueryChange }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-30 border-b border-outline-variant bg-surface/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <a href="#top" className="font-heading text-xl font-semibold tracking-tight text-on-surface">
+    <header className="sticky top-0 z-30 border-b border-orys-line bg-orys-bg/95 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl flex-col gap-orys-3 px-orys-4 py-orys-4 sm:flex-row sm:items-center sm:justify-between sm:px-orys-6">
+        <a
+          href="#top"
+          className="font-orys-sans text-orys-xl font-orys-semibold tracking-orys-head text-orys-fg"
+        >
           Armory
         </a>
         <div className="w-full sm:max-w-md">
@@ -22,7 +25,7 @@ export function Header({ query, onQueryChange }: HeaderProps) {
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder="Buscar skills, prompts, MCPs..."
-            className="w-full border border-outline-variant bg-surface-container px-3 py-2 text-sm text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:outline-none"
+            className="w-full rounded-orys-md border border-orys-line bg-orys-bg-input px-orys-3 py-orys-2 text-orys-sm text-orys-fg placeholder:text-orys-fg-mute focus:border-orys-accent focus:outline-none"
           />
         </div>
       </div>
