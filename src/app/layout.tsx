@@ -1,7 +1,5 @@
-import type { Metadata } from "next";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/600.css";
-import "@fontsource/jetbrains-mono/400.css";
+﻿import type { Metadata } from "next";
+import "@adminoryslabs/design-system/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
