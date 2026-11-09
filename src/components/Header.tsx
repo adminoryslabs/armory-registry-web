@@ -1,5 +1,7 @@
 "use client";
 
+import { ThemeToggle } from "@/components/ThemeToggle";
+
 interface HeaderProps {
   query: string;
   onQueryChange: (value: string) => void;
@@ -15,18 +17,21 @@ export function Header({ query, onQueryChange }: HeaderProps) {
         >
           Armory
         </a>
-        <div className="w-full sm:max-w-md">
-          <label className="sr-only" htmlFor="global-search">
-            Buscar skills, prompts y MCPs
-          </label>
-          <input
-            id="global-search"
-            type="search"
-            value={query}
-            onChange={(event) => onQueryChange(event.target.value)}
-            placeholder="Buscar skills, prompts, MCPs..."
-            className="w-full rounded-orys-md border border-orys-line bg-orys-bg-input px-orys-3 py-orys-2 text-orys-sm text-orys-fg placeholder:text-orys-fg-mute focus:border-orys-accent focus:outline-none"
-          />
+        <div className="flex w-full items-center gap-orys-2 sm:w-auto">
+          <div className="min-w-0 flex-1 sm:w-112 sm:flex-none">
+            <label className="sr-only" htmlFor="global-search">
+              Buscar skills, prompts y MCPs
+            </label>
+            <input
+              id="global-search"
+              type="search"
+              value={query}
+              onChange={(event) => onQueryChange(event.target.value)}
+              placeholder="Buscar skills, prompts, MCPs..."
+              className="w-full rounded-orys-md border border-orys-line bg-orys-bg-input px-orys-3 py-orys-2 text-orys-sm text-orys-fg placeholder:text-orys-fg-mute focus:border-orys-accent focus:outline-none"
+            />
+          </div>
+          <ThemeToggle />
         </div>
       </div>
     </header>
