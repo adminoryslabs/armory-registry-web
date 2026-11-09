@@ -1,0 +1,37 @@
+# Production stack for Armory web on the shared OrysLabs VPS.
+# Next.js server app. Image built in CI, pulled here; no ports published.
+
+services:
+  app:
+    image: ghcr.io/adminoryslabs/armory-web-app:${IMAGE_TAG}
+    restart: unless-stopped
+    networks: [edge]
+    deploy:
+      resources:
+        limits:
+          memory: 384M
+          cpus: "0.50"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=edge
+      - traefik.http.routers.armory-web-app.rule=Host(`armory.oryslabs.com`)
+      - traefik.http.routers.armory-web-app.entrypoints=websecure
+      - traefik.http.routers.armory-web-app.tls.certresolver=letsencrypt
+      - traefik.http.routers.armory-web-app.priority=10
+      - traefik.http.services.armory-web-app.loadbalancer.server.port=3000
+
+networks:
+  edge:
+    external: true
