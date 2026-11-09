@@ -11,7 +11,7 @@ export function LauncherCta() {
               href="https://github.com/adminoryslabs/armory-launcher-desktop/releases/latest"
               target="_blank"
               rel="noreferrer"
-              className="rounded-orys-md border border-orys-line-brand bg-orys-accent/10 px-orys-4 py-orys-2 text-orys-sm font-orys-semibold text-orys-accent transition-colors hover:bg-orys-accent hover:text-orys-bg"
+              className="rounded-orys-md border border-orys-line-brand bg-orys-accent/10 px-orys-4 py-orys-2 text-orys-sm font-orys-semibold text-orys-accent transition-colors hover:bg-orys-accent hover:text-orys-fg-on-accent"
             >
               Descargar para Windows
             </a>

@@ -18,7 +18,7 @@ code, .font-mono {
 
 ::selection {
   background: var(--orys-accent);
-  color: var(--orys-bg);
+  color: var(--orys-fg-on-accent);
 }
 
 :focus-visible {
