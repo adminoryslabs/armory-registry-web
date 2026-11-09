@@ -1,6 +1,6 @@
 export function ComingSoonBadge() {
   return (
-    <span className="font-mono text-[11px] uppercase tracking-wide text-primary border border-primary/50 bg-primary-container px-2 py-1">
+    <span className="rounded-orys-sm border border-orys-line-brand bg-orys-accent/10 px-orys-2 py-orys-1 font-orys-mono text-orys-xs uppercase tracking-orys-mono-tight text-orys-accent">
       Próximamente
     </span>
   );

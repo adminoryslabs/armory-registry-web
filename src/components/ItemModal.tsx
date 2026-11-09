@@ -63,7 +63,7 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-surface/80 px-4 py-10 backdrop-blur-sm sm:items-center"
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-orys-bg/80 px-orys-4 py-orys-10 backdrop-blur-sm sm:items-center"
       onClick={onClose}
     >
       <div
@@ -71,14 +71,14 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
         aria-modal="true"
         aria-label={item.name}
         onClick={(event) => event.stopPropagation()}
-        className="w-full max-w-2xl border border-outline-variant bg-surface-container p-6"
+        className="w-full max-w-2xl rounded-orys-2xl border border-orys-line bg-orys-bg-raised p-orys-6 shadow-orys-panel"
       >
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start justify-between gap-orys-4">
           <div>
-            <span className="font-mono text-[11px] uppercase tracking-wide text-primary">
+            <span className="font-orys-mono text-orys-xs uppercase tracking-orys-mono-tight text-orys-accent">
               {TYPE_LABELS[item.type]}
             </span>
-            <h3 className="mt-1 font-heading text-2xl font-semibold text-on-surface">
+            <h3 className="mt-orys-1 font-orys-sans text-orys-xl font-orys-semibold tracking-orys-head text-orys-fg">
               {item.name}
             </h3>
           </div>
@@ -86,20 +86,20 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
             type="button"
             onClick={onClose}
             aria-label="Cerrar"
-            className="border border-outline-variant px-2 py-1 text-on-surface-variant hover:border-primary hover:text-primary"
+            className="rounded-orys-md border border-orys-line px-orys-2 py-orys-1 text-orys-fg-dim hover:border-orys-line-brand hover:text-orys-accent"
           >
             ×
           </button>
         </div>
 
-        <p className="mt-3 text-sm text-on-surface-variant">{item.description}</p>
+        <p className="mt-orys-3 text-orys-sm text-orys-fg-dim">{item.description}</p>
 
         {item.tags.length > 0 && (
-          <ul className="mt-3 flex flex-wrap gap-1.5">
+          <ul className="mt-orys-3 flex flex-wrap gap-orys-1">
             {item.tags.map((tag) => (
               <li
                 key={tag}
-                className="font-mono text-[11px] uppercase tracking-wide text-primary bg-primary-container px-1.5 py-0.5"
+                className="rounded-orys-sm bg-orys-accent/10 px-orys-2 py-orys-1 font-orys-mono text-orys-xs uppercase tracking-orys-mono-tight text-orys-accent"
               >
                 {tag}
               </li>
@@ -108,13 +108,13 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
         )}
 
         {item.type === "mcp" && (item.repo_url || item.docs_url) && (
-          <div className="mt-3 flex flex-wrap gap-3">
+          <div className="mt-orys-3 flex flex-wrap gap-orys-3">
             {item.repo_url && (
               <a
                 href={item.repo_url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs text-primary hover:underline"
+                className="text-orys-xs text-orys-accent hover:underline"
               >
                 Repositorio →
               </a>
@@ -124,7 +124,7 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
                 href={item.docs_url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs text-primary hover:underline"
+                className="text-orys-xs text-orys-accent hover:underline"
               >
                 Documentación →
               </a>
@@ -132,20 +132,20 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
           </div>
         )}
 
-        <div className="mt-5">
+        <div className="mt-orys-5">
           {state.status === "loading" && (
-            <div className="h-32 animate-pulse border border-outline-variant bg-surface-container-low" />
+            <div className="h-32 animate-pulse rounded-orys-md border border-orys-line bg-orys-bg-input" />
           )}
 
           {state.status === "error" && (
-            <div className="border border-error/50 bg-error/10 px-4 py-4 text-sm text-error">
+            <div className="rounded-orys-md border border-orys-fail/50 bg-orys-fail-soft px-orys-4 py-orys-4 text-orys-sm text-orys-fail">
               {state.message}
             </div>
           )}
 
           {state.status === "ready" && (
             <>
-              <div className="mb-4">
+              <div className="mb-orys-4">
                 {item.type === "skill" ? (
                   <CopyButton
                     getText={() =>
@@ -160,8 +160,8 @@ export function ItemModal({ item, onClose }: ItemModalProps) {
                   />
                 )}
               </div>
-              <div className="max-h-80 overflow-y-auto border border-outline-variant bg-surface-container-low p-4">
-                <pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-on-surface-variant">
+              <div className="max-h-80 overflow-y-auto rounded-orys-md border border-orys-line bg-orys-bg-input p-orys-4">
+                <pre className="whitespace-pre-wrap font-orys-mono text-orys-xs leading-orys-body text-orys-fg-dim">
                   {state.detail.body}
                 </pre>
               </div>

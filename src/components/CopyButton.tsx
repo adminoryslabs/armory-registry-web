@@ -31,14 +31,19 @@ export function CopyButton({ getText, label, className = "" }: CopyButtonProps) 
   const label2 =
     status === "copied" ? "Copiado" : status === "error" ? "No se pudo copiar" : status === "copying" ? "Copiando..." : label;
 
+  const tone =
+    status === "copied"
+      ? "border-orys-accent bg-orys-accent/10 text-orys-accent"
+      : status === "error"
+        ? "border-orys-fail bg-orys-fail-soft text-orys-fail"
+        : "border-orys-line bg-orys-bg-input text-orys-fg hover:border-orys-line-brand hover:text-orys-accent";
+
   return (
     <button
       type="button"
       onClick={handleClick}
       disabled={status === "copying"}
-      className={`font-mono text-xs px-3 py-2 border border-outline-variant bg-surface-container-low text-on-surface transition-colors hover:border-primary hover:text-primary disabled:opacity-60 ${
-        status === "copied" ? "border-primary text-primary" : ""
-      } ${status === "error" ? "border-error text-error" : ""} ${className}`}
+      className={`rounded-orys-md border px-orys-3 py-orys-2 font-orys-mono text-orys-xs transition-colors disabled:opacity-60 ${tone} ${className}`}
     >
       {label2}
     </button>
