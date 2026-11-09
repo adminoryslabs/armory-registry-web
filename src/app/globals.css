@@ -2,13 +2,6 @@
 @import "@adminoryslabs/design-system/css";
 @import "@adminoryslabs/design-system/tailwind-theme";
 
-:root {
-  /* next/font self-hosts Inter and JetBrains Mono under generated family
-     names, so point the design system font tokens at those variables. */
-  --orys-font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --orys-font-mono: var(--font-jetbrains-mono), ui-monospace, "Menlo", monospace;
-}
-
 html {
   color-scheme: dark;
 }
