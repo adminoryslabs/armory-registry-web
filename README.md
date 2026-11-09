@@ -71,18 +71,24 @@ Ver `.env.example` para el valor por defecto de desarrollo local. En producción
 | `npm start` | Sirve el build de producción (requiere `npm run build` previo). |
 | `npm run lint` | Corre ESLint sobre el proyecto. |
 
-## Despliegue en Vercel
+## Despliegue en la VPS
 
-Es un proyecto Next.js estándar (App Router, sin servidor custom). Solo requiere las variables
-de entorno indicadas abajo.
+El sitio se despliega en la VPS compartida de OrysLabs, detrás de Traefik, igual que el resto de
+los proyectos.
 
-1. Importar el repositorio en Vercel.
-2. Configurar `NEXT_PUBLIC_API_URL` en el panel del proyecto (Settings → Environment Variables),
-   apuntando a la URL pública de `registry-api`.
-3. Configurar `NODE_AUTH_TOKEN` (token de GitHub con `read:packages`) en Production y Preview.
-   Sin esta variable, el build falla al instalar `@adminoryslabs/design-system`.
-4. Vercel detecta Next.js automáticamente y usa `npm run build` como comando de build; no hace
-   falta tocar el `Build Command` ni el `Output Directory`.
+1. Push a `main`: GitHub Actions construye la imagen, la publica en GHCR y la despliega por SSH en
+   `/opt/apps/armory-web/`.
+2. El contenedor corre el servidor standalone de Next.js en el puerto `3000` (interno) y Traefik
+   lo publica en `https://armory.oryslabs.com`.
+3. La ruta de salud del contenedor es `GET /api/health` y no depende de `registry-api`.
+
+Variables y secretos en GitHub Actions:
+
+| Nombre | Tipo | Uso |
+|---|---|---|
+| `NEXT_PUBLIC_API_URL` | variable | URL pública de `registry-api`; se hornea en el build (`https://api-armory.oryslabs.com`). |
+| `NPM_TOKEN` | secreto | Token con `read:packages` para instalar el design system en el build. |
+| `VPS_SSH_KEY`, `VPS_HOST`, `VPS_USER` | secretos | Acceso de despliegue a la VPS. |
 
 La página principal (`/`) se renderiza dinámicamente en cada request (no queda prerenderizada en
 build time), porque el catálogo cambia con el tiempo a medida que se agregan skills y prompts
