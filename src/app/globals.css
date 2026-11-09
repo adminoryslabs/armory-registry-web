@@ -1,26 +1,12 @@
 @import "tailwindcss";
+@import "@adminoryslabs/design-system/css";
+@import "@adminoryslabs/design-system/tailwind-theme";
 
-@theme inline {
-  --color-surface: #0c0e1f;
-  --color-surface-container: #14173a;
-  --color-surface-container-low: #0f122a;
-  --color-surface-container-high: #1a1e48;
-  --color-on-surface: #eaf5e4;
-  --color-on-surface-variant: #9aa48f;
-  --color-primary: #a3e635;
-  --color-primary-dim: #84cc16;
-  --color-primary-container: #1f2a12;
-  --color-on-primary: #0c0e1f;
-  --color-outline-variant: #242a52;
-  --color-error: #ef4444;
-  --color-code-bg: #090b1a;
-
-  --font-heading: var(--font-space-grotesk), sans-serif;
-  --font-sans: var(--font-inter), sans-serif;
-  --font-mono: var(--font-jetbrains-mono), monospace;
-
-  --radius-sm: 2px;
-  --radius-md: 3px;
+:root {
+  /* next/font self-hosts Inter and JetBrains Mono under generated family
+     names, so point the design system font tokens at those variables. */
+  --orys-font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --orys-font-mono: var(--font-jetbrains-mono), ui-monospace, "Menlo", monospace;
 }
 
 html {
@@ -28,25 +14,25 @@ html {
 }
 
 body {
-  background: var(--color-surface);
-  color: var(--color-on-surface);
-  font-family: var(--font-sans);
+  background: var(--orys-bg);
+  color: var(--orys-fg);
+  font-family: var(--orys-font-sans);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+  font-family: var(--orys-font-sans);
 }
 
 code, .font-mono {
-  font-family: var(--font-mono);
+  font-family: var(--orys-font-mono);
 }
 
 ::selection {
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--orys-accent);
+  color: var(--orys-bg);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--orys-accent);
   outline-offset: 2px;
 }
